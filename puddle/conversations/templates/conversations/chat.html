@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+    Start conversation
+{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto py-8">
+    <div class="bg-white rounded-lg overflow-hidden space-y-6 px-6 py-4" style="box-shadow: 0px 4px 6px rgba(106, 223, 243, 0.5);">
+        <div class="space-y-6">
+            {% for msg in msgs %}
+                {% if msg.created_by == request.user %}
+                    <div class="w-full flex justify-end">
+                        <div class="w-1/2 p-4 rounded-xl bg-blue-300">
+                            <p>{{ msg.content }}</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="w-full flex justify-start">
+                        <div class="w-1/2 p-4 rounded-xl bg-gray-300">
+                            <p>{{ msg.content }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+        <div>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.content }}
+                <button type="submit" class="w-full px-4 py-2 bg-teal-500 text-white rounded-lg font-bold hover:bg-teal-700 transition duration-300">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

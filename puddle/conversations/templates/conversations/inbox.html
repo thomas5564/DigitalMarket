@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+    Start conversation
+{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto py-8">
+    <div class="bg-white rounded-lg overflow-hidden space-y-6 px-6 py-4" style="box-shadow: 0px 4px 6px rgba(245, 1, 212, 0.5);">
+        {% for c in conversations %}
+        <a href="{% url 'conversations:chat' c.id %}" class="block">
+            <div class="6px 4py rounded-xl bg-blue-300 w-full flex flex-col md:flex-row p-4">
+                <img class="w-50 max-w-xs h-32 object-cover rounded" src="{{ c.item.image.url }}" alt="{{ item.name }}">
+                <div class="mt-4 md:mt-0 md:ml-4">
+                    <h2 class="text-lg font-semibold text-gray-800">{{ c.item.name }}</h2>
+                    <div class="text-gray-600">
+                        {% for member in c.members.all %}
+                            {% if not member == request.user %}
+                                <p><strong>{{ member.username }}</strong> | {{ c.edited_at }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
